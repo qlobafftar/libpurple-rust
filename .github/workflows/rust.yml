@@ -15,9 +15,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
     - name: Install libpurple
-      run: vcpkg install libpurple
+      run: vcpkg install purple
+    - uses: actions/checkout@v3    
     - name: Set up MinGW
       uses: egor-tensin/setup-mingw@v2
       with:

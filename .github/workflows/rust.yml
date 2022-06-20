@@ -1,0 +1,39 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x64
+    - name: Install GNU toolchain
+      run: rustup toolchain install stable-gnu
+    - name: Set default toolchain  
+      run: rustup default stable-gnu
+    - name: Add rust-mingw
+      run: rustup component add rust-mingw
+    - name: Build
+      run: cargo build --verbose
+    - name: Print file name
+      run: cd target/debug && ls
+#     - name: Upload a Build Artifact
+#       uses: actions/upload-artifact@v3.1.0
+#       with:
+#         # Artifact name
+#         name: libpurple
+#         # A file, directory or wildcard pattern that describes what to upload
+#         path: target/debug/
